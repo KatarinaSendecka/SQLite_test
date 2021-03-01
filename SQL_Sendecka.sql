@@ -1,4 +1,9 @@
 -task1
+With C AS
+	(SELECT *
+     FROM company
+     GROUP BY company_number)
+
 SELECT 
 	c.company_name, 
     b.company_code, 

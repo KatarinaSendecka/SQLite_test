@@ -11,7 +11,7 @@ SELECT
     b.product_code 
 FROM 
 	bridge b 
-    JOIN company c ON b.COMPANY_CODE=c.COMPANY_NUMBER 
+    JOIN C c ON b.COMPANY_CODE=c.COMPANY_NUMBER 
     JOIN products p ON b.PRODUCT_CODE=p.PRODUCT_CODE 
 WHERE 
 	b.end_date ISNULL AND p.END_DATE ISNULL;
@@ -41,7 +41,11 @@ SELECT
 FROM T
 
 --task3
-WITH T1 AS
+WITH C AS
+	(SELECT *
+     FROM company
+     GROUP BY company_number),
+     T1 AS
 	(SELECT 
      	CLIENT_NUMBER 
 	 FROM 
@@ -58,7 +62,7 @@ SELECT
     c.COMPANY_NAME 
 FROM 
  	sales s
-    LEFT JOIN company c ON s.COMPANY_CODE=c.COMPANY_NUMBER 
+    LEFT JOIN C c ON s.COMPANY_CODE=c.COMPANY_NUMBER 
 WHERE 
 	s.CLIENT_NUMBER NOT IN T1 AND s.PRODUCT_CODE = 10 OR s.PRODUCT_CODE = 5 OR s.PRODUCT_CODE = 2  
 

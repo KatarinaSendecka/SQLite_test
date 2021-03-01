@@ -17,12 +17,16 @@ WHERE
 	b.end_date ISNULL AND p.END_DATE ISNULL;
 
 --task2
-WITH T AS 
+With C AS
+	(SELECT *
+     FROM company
+     GROUP BY company_number),
+	T AS 
 	(SELECT
      	* 
      FROM 
      	sales s 
-     	LEFT JOIN company c ON s.COMPANY_CODE=c.COMPANY_NUMBER)
+     	LEFT JOIN C c ON s.COMPANY_CODE=c.COMPANY_NUMBER)
         
 SELECT 
 	COMPANY_CODE, 

@@ -23,15 +23,20 @@ With C AS
      GROUP BY company_number),
 	T AS 
 	(SELECT
-     	* 
+     	p.PRODUCT_CODE,
+     	volume,
+     	company_name,
+     	s.COMPANY_CODE
      FROM 
-     	sales s 
-     	LEFT JOIN C c ON s.COMPANY_CODE=c.COMPANY_NUMBER)
+     	products p 
+     	LEFT JOIN sales s ON p.PRODUCT_CODE=s.PRODUCT_CODE 
+    	LEFT JOIN C c ON s.COMPANY_CODE=c.COMPANY_NUMBER)
         
 SELECT 
+	PRODUCT_CODE,
 	COMPANY_CODE, 
     COMPANY_NAME, 
-    PRODUCT_CODE,
+    
   CASE 
       WHEN VOLUME ISNULL THEN 'No sells'
       WHEN VOLUME <= 4000 THEN 'Low sells'
@@ -39,6 +44,9 @@ SELECT
       WHEN VOLUME >= 200001 THEN 'High sells'
   END AS Sells
 FROM T
+GROUP BY
+	product_code,
+    company_code
 
 --task3
 WITH C AS
@@ -75,7 +83,7 @@ SELECT
     company_code 
 FROM 
 	sales s 
-    LEFT JOIN products p ON s.PRODUCT_CODE=p.PRODUCT_CODE
+    JOIN products p ON s.PRODUCT_CODE=p.PRODUCT_CODE
 WHERE NOT 
 	s.VOLUME='0' 
 GROUP BY 
